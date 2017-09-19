@@ -16,6 +16,24 @@ class Ping(DjangoObjectType):
         model = PingModel
 
 
+class CreatePing(graphene.Mutation):
+    class Arguments:
+        server_name = graphene.String()
+        api_key = graphene.String()
+
+    ok = graphene.Boolean()
+
+    def mutate(self, info, server_name, api_key):
+        ok = False
+        server = ServerModel.objects.filter(
+            name=server_name, api_key=api_key
+        ).first()
+        if server:
+            PingModel(server=server, ip=info.context.META['REMOTE_ADDR']).save()
+            ok = True
+        return CreatePing(ok=ok)
+
+
 class Query(graphene.ObjectType):
     servers = graphene.List(Server)
     pings = graphene.List(Ping)
@@ -24,4 +42,8 @@ class Query(graphene.ObjectType):
         return ServerModel.objects.all()
 
 
-schema = graphene.Schema(query=Query)
+class MyMutations(graphene.ObjectType):
+    create_ping = CreatePing.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=MyMutations)
