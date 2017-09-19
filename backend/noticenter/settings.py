@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'graphene_django',
+    'noticenter.api',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +120,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Graphene settings
+
+GRAPHENE = {
+    'SCHEMA': 'noticenter.api.schema'  # Where your Graphene schema lives
+}
