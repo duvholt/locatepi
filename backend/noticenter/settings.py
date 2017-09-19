@@ -124,5 +124,5 @@ STATIC_URL = '/static/'
 # Graphene settings
 
 GRAPHENE = {
-    'SCHEMA': 'noticenter.api.schema'  # Where your Graphene schema lives
+    'SCHEMA': 'noticenter.api.schema.schema'  # Where your Graphene schema lives
 }
