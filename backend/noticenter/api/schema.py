@@ -4,6 +4,8 @@ from .models import Server as ServerModel, Ping as PingModel
 
 
 class Server(DjangoObjectType):
+    ip = graphene.String(source='ip')
+
     class Meta:
         model = ServerModel
 
