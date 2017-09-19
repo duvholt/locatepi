@@ -8,6 +8,7 @@ class Server(DjangoObjectType):
 
     class Meta:
         model = ServerModel
+        only_fields = ('id', 'name',)
 
 
 class Ping(DjangoObjectType):
@@ -19,8 +20,7 @@ class Query(graphene.ObjectType):
     servers = graphene.List(Server)
     pings = graphene.List(Ping)
 
-    @graphene.resolve_only_args
-    def resolve_servers(self):
+    def resolve_servers(self, info):
         return ServerModel.objects.all()
 
 
