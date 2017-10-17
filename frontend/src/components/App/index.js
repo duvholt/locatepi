@@ -1,6 +1,6 @@
 import React from 'react';
 import css from './App.css';
-import Server from '../Server';
+import Servers from '../Servers';
 
 const App = () => (
   <div>
@@ -9,8 +9,7 @@ const App = () => (
         <h2>Surveillance Center</h2>
       </div>
       <div className={css.content}>
-        <Server name="Onlinekontoret Pi Inngang" ip="129.241.105.255" lastUpdate={new Date()} />
-        <Server name="Onlinekontoret Pi Kjøleskap" ip="129.241.105.255" lastUpdate={new Date()} />
+        <Servers />
       </div>
     </div>
     <div className={css.backgroundCircle} />
