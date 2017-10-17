@@ -1,0 +1,38 @@
+.component {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.header {
+  background: rgba(25,56,77, 1);
+  font-size: 2rem;
+  font-weight: 300;
+  padding: 0.5rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+.intro {
+  color: #ffffff;
+}
+
+.content {
+  padding: 4rem 2rem;
+  background: linear-gradient(to left bottom, #2D546E 0%,#1E3646 100%);
+}
+
+.content > * + * {
+  margin-top: 2rem;
+}
+
+.backgroundCircle {
+  position: absolute;
+  width: 1200px;
+  height: 1200px;
+  right: -450px;
+  top: -450px;
+  background: red;
+  background: linear-gradient(to left bottom, #5D88A4 0%,#294D65 100%);
+  border-radius: 100%;
+  z-index: -1;
+}

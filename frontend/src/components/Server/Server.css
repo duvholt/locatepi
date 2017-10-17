@@ -1,0 +1,30 @@
+.component {
+  width: 100%;
+  display: flex;
+}
+
+.name {
+  display: inline-block;
+  padding: 0.5rem;
+  background: #642222;
+  font-size: 1.5rem;
+  font-weight: 300;
+  width: 30%;
+  text-align: center;
+  color: #ffffff;
+}
+
+.content {
+  width: 100%;
+  display: inline-flex;
+  padding: 1.5rem 1rem;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+.ip {
+}
+
+.date {
+  
+}
