@@ -5,13 +5,17 @@
 
 .name {
   display: inline-block;
+  background: #2a7852;
   padding: 0.8rem;
-  background: #642222;
   font-size: 1.5rem;
   font-weight: 300;
   width: 30%;
   text-align: center;
   color: #ffffff;
+}
+
+.offline {
+  background: #642222;
 }
 
 .content {
