@@ -1,4 +1,6 @@
 from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
+from graphene import relay
 import graphene
 from .models import Server as ServerModel, Ping as PingModel
 
@@ -8,12 +10,15 @@ class Server(DjangoObjectType):
 
     class Meta:
         model = ServerModel
-        only_fields = ('id', 'name',)
+        filter_fields = ['id', 'name']
+        interfaces = (relay.Node,)
 
 
 class Ping(DjangoObjectType):
     class Meta:
         model = PingModel
+        filter_fields = ['id']
+        interfaces = (relay.Node,)
 
 
 class CreatePing(graphene.Mutation):
@@ -23,7 +28,8 @@ class CreatePing(graphene.Mutation):
 
     ok = graphene.Boolean()
 
-    def mutate(self, info, server_name, api_key):
+    @classmethod
+    def mutate(cls, root, info, server_name, api_key):
         ok = False
         server = ServerModel.objects.filter(
             name=server_name, api_key=api_key
@@ -35,11 +41,11 @@ class CreatePing(graphene.Mutation):
 
 
 class Query(graphene.ObjectType):
-    servers = graphene.List(Server)
-    pings = graphene.List(Ping)
+    server = relay.Node.Field(Server)
+    all_servers = DjangoFilterConnectionField(Server)
 
-    def resolve_servers(self, info):
-        return ServerModel.objects.all()
+    ping = relay.Node.Field(Ping)
+    all_pings = DjangoFilterConnectionField(Ping)
 
 
 class MyMutations(graphene.ObjectType):
