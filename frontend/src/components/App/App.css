@@ -8,8 +8,12 @@
   font-size: 2rem;
   font-weight: 300;
   padding: 0.5rem;
-  color: #ffffff;
   text-align: center;
+}
+
+.header h2 {
+  color: #ffffff;
+  font-weight: 300;
 }
 
 .intro {
