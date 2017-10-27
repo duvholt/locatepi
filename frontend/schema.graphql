@@ -1,0 +1,90 @@
+schema {
+  query: Query
+  mutation: MyMutations
+}
+
+type CreatePing {
+  ok: Boolean
+}
+
+# The `DateTime` scalar type represents a DateTime
+# value as specified by
+# [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+scalar DateTime
+
+type MyMutations {
+  createPing(serverName: String, apiKey: String): CreatePing
+}
+
+# An object with an ID
+interface Node {
+  # The ID of the object.
+  id: ID!
+}
+
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Ping implements Node {
+  # The ID of the object.
+  id: ID!
+  server: Server!
+  ip: String!
+  time: DateTime!
+}
+
+type PingConnection {
+  pageInfo: PageInfo!
+  edges: [PingEdge]!
+}
+
+type PingEdge {
+  # The item at the end of the edge
+  node: Ping
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Query {
+  # The ID of the object
+  server(id: ID!): Server
+  allServers(before: String, after: String, first: Int, last: Int, id: ID, name: String): ServerConnection
+
+  # The ID of the object
+  ping(id: ID!): Ping
+  allPings(before: String, after: String, first: Int, last: Int, id: ID): PingConnection
+}
+
+type Server implements Node {
+  # The ID of the object.
+  id: ID!
+  name: String!
+  apiKey: String!
+  pings(before: String, after: String, first: Int, last: Int, id: ID): PingConnection
+  ip: String
+}
+
+type ServerConnection {
+  pageInfo: PageInfo!
+  edges: [ServerEdge]!
+}
+
+type ServerEdge {
+  # The item at the end of the edge
+  node: Server
+
+  # A cursor for use in pagination
+  cursor: String!
+}

@@ -47,8 +47,10 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "relay": "relay-compiler --src ./src --schema path/schema.graphql"
+    "relay": "relay-compiler --src ./src --schema schema.graphql",
+    "buildSchema": "node scripts/buildSchema.js"
   },
+  "proxy": "http://localhost:8000",
   "devDependencies": {
     "babel-plugin-relay": "^1.4.1",
     "relay-compiler": "^1.4.1"
