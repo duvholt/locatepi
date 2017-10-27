@@ -1,5 +1,7 @@
 import React from 'react';
 import { graphql, createFragmentContainer } from 'react-relay';
+import formatRelative from 'date-fns/formatRelative';
+
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import css from './Server.css';
@@ -7,6 +9,7 @@ import css from './Server.css';
 const Server = ({ server }) => {
   const offline = false;
   const { name, ip, lastUpdate } = server;
+  const relativeTime = formatRelative(new Date(lastUpdate), new Date());
   return (
     <div className={css.component}>
       <div
@@ -20,7 +23,7 @@ const Server = ({ server }) => {
       </div>
       <div className={css.content}>
         <div className={css.ip}>{ ip }</div>
-        <div className={css.date}>{lastUpdate && `Last update: ${lastUpdate}` }</div>
+        <div className={css.date}>{lastUpdate && `Last update: ${relativeTime}` }</div>
       </div>
     </div>
   );
