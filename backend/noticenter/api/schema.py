@@ -1,5 +1,4 @@
-from graphene_django import DjangoObjectType
-from graphene_django.filter import DjangoFilterConnectionField
+from graphene_django import DjangoObjectType, DjangoConnectionField
 from graphene import relay
 import graphene
 from .models import Server as ServerModel, Ping as PingModel
@@ -41,11 +40,7 @@ class CreatePing(graphene.Mutation):
 
 
 class Query(graphene.ObjectType):
-    server = relay.Node.Field(Server)
-    all_servers = DjangoFilterConnectionField(Server)
-
-    ping = relay.Node.Field(Ping)
-    all_pings = DjangoFilterConnectionField(Ping)
+    servers = DjangoConnectionField(Server)
 
 
 class MyMutations(graphene.ObjectType):

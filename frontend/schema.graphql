@@ -58,13 +58,7 @@ type PingEdge {
 }
 
 type Query {
-  # The ID of the object
-  server(id: ID!): Server
-  allServers(before: String, after: String, first: Int, last: Int, id: ID, name: String): ServerConnection
-
-  # The ID of the object
-  ping(id: ID!): Ping
-  allPings(before: String, after: String, first: Int, last: Int, id: ID): PingConnection
+  servers(before: String, after: String, first: Int, last: Int): ServerConnection
 }
 
 type Server implements Node {

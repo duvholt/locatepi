@@ -2,7 +2,6 @@ import React from 'react';
 import Server from '../Server';
 import css from './Servers.css';
 
-
 import {
   QueryRenderer,
   graphql,
@@ -38,17 +37,16 @@ const modernEnvironment = new Environment({
 });
 
 const Servers = () => (
-  <div className={css.component}>
+ <div className={css.component}>
     <QueryRenderer
       environment={modernEnvironment}
       query={graphql`
         query ServersQuery {
-          allServers {
+          servers {
             edges {
               node {
-                name,
-                ip,
                 id,
+                ...Server_server,
               }
             }
           }
@@ -56,17 +54,19 @@ const Servers = () => (
       `}
       variables={{}}
       render={({error, props}) => {
-        if (props) {
-          console.log(props);
+        if(props) {
           return (
             <div className={css.servers}>
-              {props.allServers.edges.map(edge => (
-                <Server key={edge.node.id} name={edge.node.name} ip={edge.node.ip} />
-              ))}
+              { props.servers.edges.map(edge => (
+                <Server
+                key={edge.node.id}
+                server={edge.node}
+                />
+              )) }
             </div>
           );
         } else {
-          return <div>'Loading'</div>;
+          return <div>Loading...</div>
         }
       }}
     />
