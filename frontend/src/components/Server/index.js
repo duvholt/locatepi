@@ -6,7 +6,7 @@ import css from './Server.css';
 
 const Server = ({ server }) => {
   const offline = false;
-  const { name, ip } = server;
+  const { name, ip, lastUpdate } = server;
   return (
     <div className={css.component}>
       <div
@@ -20,7 +20,7 @@ const Server = ({ server }) => {
       </div>
       <div className={css.content}>
         <div className={css.ip}>{ ip }</div>
-        <div className={css.date}>Last update: 2017-10-10 13:44</div>
+        <div className={css.date}>{lastUpdate && `Last update: ${lastUpdate}` }</div>
       </div>
     </div>
   );
@@ -43,6 +43,7 @@ export default createFragmentContainer(
     fragment Server_server on Server {
       ip,
       name,
+      lastUpdate,
     }
   `,
 );

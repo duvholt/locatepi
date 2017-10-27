@@ -68,6 +68,7 @@ type Server implements Node {
   apiKey: String!
   pings(before: String, after: String, first: Int, last: Int, id: ID): PingConnection
   ip: String
+  lastUpdate: String
 }
 
 type ServerConnection {

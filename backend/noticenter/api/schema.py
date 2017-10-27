@@ -6,6 +6,7 @@ from .models import Server as ServerModel, Ping as PingModel
 
 class Server(DjangoObjectType):
     ip = graphene.String(source='ip')
+    lastUpdate = graphene.String(source='lastUpdate')
 
     class Meta:
         model = ServerModel

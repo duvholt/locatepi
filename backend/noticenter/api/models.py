@@ -7,10 +7,20 @@ class Server(models.Model):
 
     @property
     def ip(self):
-        latest_ping = self.pings.order_by('-time').first()
+        latest_ping = self._latest_ping()
         if latest_ping:
             return latest_ping.ip
         return None
+
+    @property
+    def lastUpdate(self):
+        latest_ping = self._latest_ping()
+        if latest_ping:
+            return latest_ping.time
+        return None
+
+    def _latest_ping(self):
+        return self.pings.order_by('-time').first()
 
     def __str__(self):
         return self.name
