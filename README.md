@@ -1,6 +1,8 @@
 # Locatepi
 
-An health check solution for devices without static IPs. 
+A health check solution for devices without static IPs.
+
+![Screenshot](https://i.imgur.com/yYuQcU5.png)
 
 ## Architecture
 
