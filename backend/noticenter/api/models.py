@@ -27,8 +27,13 @@ class Server(models.Model):
 
 
 class Ping(models.Model):
-    server = models.ForeignKey(Server, related_name='pings', on_delete=models.CASCADE)
+    server = models.ForeignKey(
+        Server,
+        related_name='pings',
+        on_delete=models.CASCADE
+    )
     ip = models.CharField(max_length=50)
+    local_ip = models.CharField(max_length=50, null=True)
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

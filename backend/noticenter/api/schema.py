@@ -26,17 +26,22 @@ class CreatePing(graphene.Mutation):
     class Arguments:
         server_name = graphene.String()
         api_key = graphene.String()
+        local_ip = graphene.String()
 
     ok = graphene.Boolean()
 
     @classmethod
-    def mutate(cls, root, info, server_name, api_key):
+    def mutate(cls, root, info, server_name, api_key, local_ip):
         ok = False
         server = ServerModel.objects.filter(
             name=server_name, api_key=api_key
         ).first()
         if server:
-            PingModel(server=server, ip=info.context.META['REMOTE_ADDR']).save()
+            PingModel(
+                server=server,
+                ip=info.context.META['REMOTE_ADDR'],
+                local_ip=local_ip,
+            ).save()
             ok = True
         return CreatePing(ok=ok)
 

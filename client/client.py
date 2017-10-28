@@ -3,6 +3,7 @@ from gql.transport.requests import RequestsHTTPTransport
 import logging
 import config
 import time
+import socket
 
 logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
 logger = logging.getLogger('pinger')
@@ -20,7 +21,11 @@ class Pinger:
     def ping(self):
         query = gql(f'''
         mutation {{
-          createPing(serverName: "{self.server_name}", apiKey: "{self.api_key}") {{
+          createPing(
+            serverName: "{self.server_name}",
+            apiKey: "{self.api_key}",
+            localIp: "{self.find_local_ip()}"
+          ) {{
             ok
           }}
         }}
@@ -36,6 +41,13 @@ class Pinger:
         while True:
             self.ping()
             time.sleep(config.PING_INTERVAL)
+
+    def find_local_ip(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(("8.8.8.8", 80))
+        ip = s.getsockname()[0]
+        s.close()
+        return ip
 
 
 if __name__ == '__main__':
