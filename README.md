@@ -31,7 +31,7 @@ The frontend is written in React and Relay. It displays the devices along with t
 cd frontend
 npm install # or yarn
 npm start
-# Runs on localhost:8080 by default
+# Runs on localhost:3000 by default
 ```
 
 ### Ping client
@@ -43,8 +43,8 @@ This application should run on all devices that needs health check. It's a simpl
 |Key             |Description|Default|
 |:---------------|:----------|:------|
 |NC_BACKEND_URL  |Full URL to the GraphQL backend including /graphql|http://localhost:8000/graphql|
-|NC_SERVER_NAME  |The device server name||
-|NC_API_KEY      |API key corrosponding to the server name||
+|NC_SERVER_KEY  |The device server key||
+|NC_API_KEY      |API key corrosponding to the server key||
 |NC_PING_INTERVAL|How often to ping in seconds|300(5 min)|
 
 #### How to start

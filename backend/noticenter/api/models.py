@@ -3,6 +3,7 @@ from django.db import models
 
 class Server(models.Model):
     name = models.CharField(max_length=100)
+    key = models.CharField(max_length=100, unique=True)
     api_key = models.CharField(max_length=200)
 
     @property
@@ -10,7 +11,7 @@ class Server(models.Model):
         return self.pings.order_by('-time').first()
 
     def __str__(self):
-        return self.name
+        return f'{self.name}({self.key})'
 
 
 class Ping(models.Model):

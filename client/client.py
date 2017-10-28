@@ -10,8 +10,8 @@ logger = logging.getLogger('pinger')
 
 
 class Pinger:
-    def __init__(self, server_name, api_key):
-        self.server_name = server_name
+    def __init__(self, server_key, api_key):
+        self.server_key = server_key
         self.api_key = api_key
         requests_transport = RequestsHTTPTransport(
             config.BACKEND_URL
@@ -22,7 +22,7 @@ class Pinger:
         query = gql(f'''
         mutation {{
           createPing(
-            serverName: "{self.server_name}",
+            serverKey: "{self.server_key}",
             apiKey: "{self.api_key}",
             localIp: "{self.find_local_ip()}"
           ) {{
@@ -37,7 +37,7 @@ class Pinger:
             logger.error('Failed to create ping')
 
     def start(self):
-        logger.info(f'Started pinger against server {self.server_name}')
+        logger.info(f'Started pinger against server {self.server_key}')
         while True:
             self.ping()
             time.sleep(config.PING_INTERVAL)
@@ -51,5 +51,5 @@ class Pinger:
 
 
 if __name__ == '__main__':
-    pinger = Pinger(config.SERVER_NAME, config.API_KEY)
+    pinger = Pinger(config.SERVER_KEY, config.API_KEY)
     pinger.start()

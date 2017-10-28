@@ -3,6 +3,7 @@ from graphene import relay
 import graphene
 from .models import Server as ServerModel, Ping as PingModel
 
+
 class Ping(DjangoObjectType):
     class Meta:
         model = PingModel
@@ -15,8 +16,8 @@ class Server(DjangoObjectType):
 
     class Meta:
         model = ServerModel
-        filter_fields = ['id', 'name']
-        only_fields = ['id', 'name', 'ping']
+        filter_fields = ['id', 'key']
+        only_fields = ['id', 'name', 'ping', 'key']
         interfaces = (relay.Node,)
 
     def resolve_ping(self, args):
@@ -25,17 +26,17 @@ class Server(DjangoObjectType):
 
 class CreatePing(graphene.Mutation):
     class Arguments:
-        server_name = graphene.String()
+        server_key = graphene.String()
         api_key = graphene.String()
         local_ip = graphene.String()
 
     ok = graphene.Boolean()
 
     @classmethod
-    def mutate(cls, root, info, server_name, api_key, local_ip):
+    def mutate(cls, root, info, server_key, api_key, local_ip):
         ok = False
         server = ServerModel.objects.filter(
-            name=server_name, api_key=api_key
+            key=server_key, api_key=api_key
         ).first()
         if server:
             PingModel(
