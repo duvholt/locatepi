@@ -137,3 +137,7 @@ venv.bak/
 .mypy_cache/
 
 # End of https://www.gitignore.io/api/python,django
+
+# Custom
+__generated__
+backend/schema.json
