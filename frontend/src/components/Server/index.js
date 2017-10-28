@@ -29,15 +29,12 @@ const Server = ({ server }) => {
   );
 }
 
-Server.defaultProps = {
-  offline: false,
-}
-
 Server.propTypes = {
-  name: PropTypes.string.isRequired,
-  ip: PropTypes.string.isRequired,
-  lastUpdate: PropTypes.instanceOf(Date).isRequired,
-  offline: PropTypes.bool,
+  server: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    ip: PropTypes.string,
+    lastUpdate: PropTypes.string,
+  }).isRequired,
 }
 
 export default createFragmentContainer(
