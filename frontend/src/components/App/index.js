@@ -6,7 +6,7 @@ const App = () => (
   <div>
     <div className={css.component}>
       <div className={css.header}>
-        <h2>Surveillance Center</h2>
+        <h2>Locatepi</h2>
       </div>
       <div className={css.content}>
         <Servers />
