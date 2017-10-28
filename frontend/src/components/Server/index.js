@@ -7,11 +7,14 @@ import classNames from 'classnames';
 import css from './Server.css';
 
 const Server = ({ server }) => {
-  const offline = false;
+  let offline = true;
   const { name, ping } = server;
   let relativeTime = null;
   if (ping) {
     relativeTime = formatRelative(new Date(ping.time), new Date());
+    if (new Date() - new Date(ping.time) < 1000 * 60 * 10) {
+      offline = false;
+    }
   }
   return (
     <div className={css.component}>
