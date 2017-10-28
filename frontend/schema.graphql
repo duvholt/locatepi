@@ -7,8 +7,13 @@ type CreatePing {
   ok: Boolean
 }
 
+# The `DateTime` scalar type represents a DateTime
+# value as specified by
+# [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
+scalar DateTime
+
 type MyMutations {
-  createPing(serverName: String, apiKey: String): CreatePing
+  createPing(serverName: String, apiKey: String, localIp: String): CreatePing
 }
 
 # An object with an ID
@@ -31,6 +36,15 @@ type PageInfo {
   endCursor: String
 }
 
+type Ping implements Node {
+  # The ID of the object.
+  id: ID!
+  server: Server!
+  ip: String!
+  localIp: String
+  time: DateTime!
+}
+
 type Query {
   servers(before: String, after: String, first: Int, last: Int): ServerConnection
 }
@@ -39,8 +53,7 @@ type Server implements Node {
   # The ID of the object.
   id: ID!
   name: String!
-  ip: String
-  lastUpdate: String
+  ping: Ping
 }
 
 type ServerConnection {

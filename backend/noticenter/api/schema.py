@@ -3,23 +3,24 @@ from graphene import relay
 import graphene
 from .models import Server as ServerModel, Ping as PingModel
 
-
-class Server(DjangoObjectType):
-    ip = graphene.String(source='ip')
-    lastUpdate = graphene.String(source='lastUpdate')
-
-    class Meta:
-        model = ServerModel
-        filter_fields = ['id', 'name']
-        only_fields = ['id', 'name']
-        interfaces = (relay.Node,)
-
-
 class Ping(DjangoObjectType):
     class Meta:
         model = PingModel
         filter_fields = ['id']
         interfaces = (relay.Node,)
+
+
+class Server(DjangoObjectType):
+    ping = graphene.Field(Ping)
+
+    class Meta:
+        model = ServerModel
+        filter_fields = ['id', 'name']
+        only_fields = ['id', 'name', 'ping']
+        interfaces = (relay.Node,)
+
+    def resolve_ping(self, args):
+        return self.ping
 
 
 class CreatePing(graphene.Mutation):

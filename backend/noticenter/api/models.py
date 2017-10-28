@@ -6,20 +6,7 @@ class Server(models.Model):
     api_key = models.CharField(max_length=200)
 
     @property
-    def ip(self):
-        latest_ping = self._latest_ping()
-        if latest_ping:
-            return latest_ping.ip
-        return None
-
-    @property
-    def lastUpdate(self):
-        latest_ping = self._latest_ping()
-        if latest_ping:
-            return latest_ping.time
-        return None
-
-    def _latest_ping(self):
+    def ping(self):
         return self.pings.order_by('-time').first()
 
     def __str__(self):

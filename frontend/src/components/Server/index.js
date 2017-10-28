@@ -8,8 +8,11 @@ import css from './Server.css';
 
 const Server = ({ server }) => {
   const offline = false;
-  const { name, ip, lastUpdate } = server;
-  const relativeTime = formatRelative(new Date(lastUpdate), new Date());
+  const { name, ping } = server;
+  let relativeTime = null;
+  if (ping) {
+    relativeTime = formatRelative(new Date(ping.time), new Date());
+  }
   return (
     <div className={css.component}>
       <div
@@ -22,8 +25,13 @@ const Server = ({ server }) => {
         { name }
       </div>
       <div className={css.content}>
-        <div className={css.ip}>{ ip }</div>
-        <div className={css.date}>{lastUpdate && `Last update: ${relativeTime}` }</div>
+        { ping && (
+          <div className={css.ip}>
+            <div>{ ping.ip }</div>
+            <div>{ ping.localIp }</div>
+          </div>
+        )}
+        <div className={css.date}>{relativeTime && `Last update: ${relativeTime}` }</div>
       </div>
     </div>
   );
@@ -32,8 +40,11 @@ const Server = ({ server }) => {
 Server.propTypes = {
   server: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    ip: PropTypes.string,
-    lastUpdate: PropTypes.string,
+    ping: PropTypes.shape({
+      ip: PropTypes.string,
+      time: PropTypes.string,
+      localIp: PropTypes.string,
+    }),
   }).isRequired,
 }
 
@@ -41,9 +52,12 @@ export default createFragmentContainer(
   Server,
   graphql`
     fragment Server_server on Server {
-      ip,
       name,
-      lastUpdate,
+      ping {
+        ip,
+        time,
+        localIp
+      }
     }
   `,
 );
