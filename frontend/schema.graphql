@@ -7,11 +7,6 @@ type CreatePing {
   ok: Boolean
 }
 
-# The `DateTime` scalar type represents a DateTime
-# value as specified by
-# [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
-scalar DateTime
-
 type MyMutations {
   createPing(serverName: String, apiKey: String): CreatePing
 }
@@ -36,27 +31,6 @@ type PageInfo {
   endCursor: String
 }
 
-type Ping implements Node {
-  # The ID of the object.
-  id: ID!
-  server: Server!
-  ip: String!
-  time: DateTime!
-}
-
-type PingConnection {
-  pageInfo: PageInfo!
-  edges: [PingEdge]!
-}
-
-type PingEdge {
-  # The item at the end of the edge
-  node: Ping
-
-  # A cursor for use in pagination
-  cursor: String!
-}
-
 type Query {
   servers(before: String, after: String, first: Int, last: Int): ServerConnection
 }
@@ -65,8 +39,6 @@ type Server implements Node {
   # The ID of the object.
   id: ID!
   name: String!
-  apiKey: String!
-  pings(before: String, after: String, first: Int, last: Int, id: ID): PingConnection
   ip: String
   lastUpdate: String
 }

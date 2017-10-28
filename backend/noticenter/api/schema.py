@@ -11,6 +11,7 @@ class Server(DjangoObjectType):
     class Meta:
         model = ServerModel
         filter_fields = ['id', 'name']
+        only_fields = ['id', 'name']
         interfaces = (relay.Node,)
 
 
