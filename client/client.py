@@ -19,17 +19,21 @@ class Pinger:
         self.gql_client = Client(transport=requests_transport)
 
     def ping(self):
-        query = gql(f'''
+        query = gql('''
         mutation {{
           createPing(
-            serverKey: "{self.server_key}",
-            apiKey: "{self.api_key}",
-            localIp: "{self.find_local_ip()}"
+            serverKey: "{server_key}",
+            apiKey: "{api_key}",
+            localIp: "{find_local_ip}"
           ) {{
             ok
           }}
         }}
-        ''')
+        '''.format(
+            server_key=self.server_key,
+            api_key=self.api_key,
+            find_local_ip=self.find_local_ip())
+        )
         result = self.gql_client.execute(query)['createPing']
         if result['ok']:
             logger.debug('Successfully pinged')
@@ -37,7 +41,7 @@ class Pinger:
             logger.error('Failed to create ping')
 
     def start(self):
-        logger.info(f'Started pinger against server {self.server_key}')
+        logger.info('Started pinger against server {}'.format(self.server_key))
         while True:
             self.ping()
             time.sleep(config.PING_INTERVAL)
